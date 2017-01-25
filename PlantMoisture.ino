@@ -1,11 +1,9 @@
-#include <SoftwareSerial.h>
-
 #define MOISTURE_PIN 3
 #define LED_PIN 13
 #define RX_PIN 10
 #define TX_PIN 11
 
-SoftwareSerial esp8266(RX_PIN,TX_PIN);
+#include "esp8266.h"
 
 int readMoisture(){
     int ret = analogRead(MOISTURE_PIN);
@@ -15,9 +13,7 @@ int readMoisture(){
 void setup() {
     Serial.begin(9600); // Setup serial through USB
     
-    esp8266.begin(115200); // Initially begin at 115200 baud rate
-    esp8266.print("AT+CIOBAUD=9600\n\r"); // Set baud rate to 9600
-    esp8266.begin(9600); // Begin now at 9600
+    esp_init(9600);
     
     pinMode(LED_PIN,OUTPUT); // Initialize on board LED
     digitalWrite(LED_PIN,LOW); // Disable on board LED
