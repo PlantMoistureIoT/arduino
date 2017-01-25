@@ -20,7 +20,7 @@ void setup() {
     esp8266.begin(9600); // Begin now at 9600
     
     pinMode(LED_PIN,OUTPUT); // Initialize on board LED
-    digitalWrite(LED_PIN,HIGH); // Disable on board LED
+    digitalWrite(LED_PIN,LOW); // Disable on board LED
 }
 
 void loop() {
