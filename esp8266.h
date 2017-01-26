@@ -17,9 +17,10 @@
 
 SoftwareSerial esp8266(RX_PIN,TX_PIN);
 
-int exec(const String &str)
+int exec(char buf[])
 {
-        int ret=esp8266.print(str + "\r\n");
+        strcat(buf,"\r\n");
+        int ret=esp8266.write(buf,strlen(buf));
 
 	      return ret;
 }
@@ -45,11 +46,17 @@ int esp_init(const int &baud)
         int ret;
 
         esp8266.begin(DEFAULT_BAUD);
-        ret = exec(String("AT+CIOBAUD=") + baud);
+
+        char buf[20] = "AT+CIOBAUD=";
+        char baud_str[8];
+        itoa(baud,baud_str,10);
+        strcat(buf,baud_str);
+
+        ret = exec(buf);
         esp8266.begin(baud);
 
         delay(1000);
-        
+
         return ret;
 }
 
