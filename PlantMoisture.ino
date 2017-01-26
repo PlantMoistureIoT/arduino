@@ -3,12 +3,35 @@
 #define RX_PIN 10
 #define TX_PIN 11
 
+#define API_KEY "api_key_here"
+#define FIELD "field1"
+
 #include "esp8266.h"
 
 int readMoisture()
 {
         int ret = analogRead(MOISTURE_PIN);
         return ret;
+}
+
+void postData(const int& val)
+{
+        char cmd[256];
+
+        strcpy(cmd,"AT+CIPSTART=\"TCP\",\"184.106.153.149\",80");
+        exec(cmd);
+        delay(2000);
+
+        strcpy(cmd,"AT+CIPSEND=50");
+        exec(cmd);
+        delay(1200);
+
+        strcpy(cmd,"GET /update?api_key=" API_KEY "&" FIELD "=");
+        char val_str[6];
+        itoa(val,val_str,10);
+        strcat(cmd,val_str);
+        exec(cmd);
+        delay(1000);
 }
 
 void setup()
