@@ -6,6 +6,8 @@
 #define API_KEY "api_key_here"
 #define FIELD "field1"
 
+#define DELAY_INTERVAL 15000
+
 #include "esp8266.h"
 
 int readMoisture()
@@ -46,11 +48,8 @@ void setup()
 
 void loop()
 {
-        if(esp8266.available()) {
-                Serial.write((char)esp8266.read());
-        }
-
-        if(Serial.available()) {
-                esp8266.write(Serial.read());
-        }
+        int moisture = readMoisture();
+        Serial.println(moisture);
+        postData(moisture);
+        delay(DELAY_INTERVAL);
 }
