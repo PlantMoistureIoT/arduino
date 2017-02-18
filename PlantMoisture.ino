@@ -43,7 +43,15 @@ void postData(const int& val)
         exec(cmd);
         delay(2000);
 
-        strcpy(cmd,"AT+CIPSEND=50");
+        strcpy(cmd,"AT+CIPSEND=");
+        int length = 46, tmp = val;
+        do {
+                ++length;
+                tmp/=10;
+        } while(tmp != 0);
+        char length_str[6];
+        itoa(length,length_str,10);
+        strcat(cmd,length_str);
         exec(cmd);
         delay(1200);
 
