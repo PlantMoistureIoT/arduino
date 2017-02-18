@@ -22,6 +22,9 @@
 #define API_KEY "api_key_here"
 #define FIELD "field1"
 
+#define UPPER_LIMIT 1023
+#define LOWER_LIMIT 400
+
 #define DELAY_INTERVAL 15000
 
 #include "esp8266.h"
@@ -64,7 +67,8 @@ void setup()
 
 void loop()
 {
-        int moisture = readMoisture();
+        float moisture = readMoisture();
+        moisture = ((UPPER_LIMIT - moisture) * 100) / (UPPER_LIMIT - LOWER_LIMIT);
         Serial.println(moisture);
         postData(moisture);
         delay(DELAY_INTERVAL);
