@@ -23,7 +23,7 @@
 #define FIELD "field1"
 
 #define UPPER_LIMIT 1023
-#define LOWER_LIMIT 400
+#define LOWER_LIMIT 350
 
 #define DELAY_INTERVAL 15000
 
@@ -76,8 +76,13 @@ void setup()
 void loop()
 {
         float moisture = readMoisture();
-        moisture = ((UPPER_LIMIT - moisture) * 100) / (UPPER_LIMIT - LOWER_LIMIT);
+        Serial.print("RAW=");
         Serial.println(moisture);
+
+        moisture = ((UPPER_LIMIT - moisture) * 100) / (UPPER_LIMIT - LOWER_LIMIT);
+        Serial.print("%=");
+        Serial.println(moisture);
+
         postData(moisture);
         delay(DELAY_INTERVAL);
 }
